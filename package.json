@@ -1,0 +1,32 @@
+{
+  "name": "surfing",
+  "version": "0.0.0-alpha",
+  "description": "Realy simple and customizable schemas without recursion.",
+  "keywords": [
+    "schema",
+    "mutation",
+    "validation",
+    "interpritation",
+    "transform"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meteor-shuttler/surfing.git"
+  },
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/meteor-shuttler/surfing.git"
+  },
+  "main": "./main.js",
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  },
+  "scripts": {
+    "test": "mocha tests.js",
+    "chai": "^3.5.0",
+  },
+  "dependencies": {
+    "lodash": "~4.13.1"
+  }
+}
