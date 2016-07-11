@@ -22,12 +22,12 @@ var Or = function() {
     if (typeof(surfing.stack[surfing.last].schema) != 'object') {
       surfing.stack.pop();
     } else {
+      if (surfing.stack[surfing.last].hasError === false) {
+        surfing.stack[surfing.last].errored = false;
+      }
       if (surfing.stack[surfing.last].keys) {
         surfing.stack[surfing.last].key++;
         if (surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]) {
-          if (surfing.stack[surfing.last].hasError === false) {
-            surfing.stack[surfing.last].errored = false;
-          }
           surfing.stack[surfing.last].hasError = false;
           
           surfing.stack.push({
@@ -45,9 +45,6 @@ var Or = function() {
       } else if (surfing.stack[surfing.last].array){
         surfing.stack[surfing.last].key++;
         if (surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) {
-          if (surfing.stack[surfing.last].hasError === false) {
-            surfing.stack[surfing.last].errored = false;
-          }
           surfing.stack[surfing.last].hasError = false;
           
           if (typeof(surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) === 'string') {

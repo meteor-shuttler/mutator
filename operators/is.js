@@ -123,7 +123,7 @@ var Array = function() {
   };
   this.validate = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
-      if (typeof(surfing.stack[surfing.last].data) !== 'object' || Object.prototype.toString.call(surfing.stack[surfing.last].data) === '[object Array]') {
+      if (typeof(surfing.stack[surfing.last].data) !== 'object' || Object.prototype.toString.call(surfing.stack[surfing.last].data) !== '[object Array]') {
         surfing.throw();
       }
     }
