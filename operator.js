@@ -1,16 +1,4 @@
-// Прототип одного уровня обработчика.
-var Operator = function() {
-  
-  // Ловит ошибку если она была выброшена на уровне ниже.
-  this.catch = function() {};
-  
-  // Выполняет работу оператора.
-  // Может изменить положение в стеке схемы и стеке данных.
-  // Может изменить данные
-  // Может выбросить ошибку
-  this.operate = function() {};
-  
-};
+var Operator = function() {};
 
 Operator.prototype.inDefaultOperator = function(surfing) {
   surfing.stack.push({

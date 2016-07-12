@@ -46,6 +46,50 @@ Boolean.prototype = operator;
 
 exports.boolean = new Boolean();
 
+var Null = function() {
+  this.operate = function(surfing) {
+    if (surfing.stack[surfing.last].operated) {
+      surfing.stack.pop();
+    } else {
+      surfing.stack[surfing.last].operated = true;
+      this.inDefaultOperator(surfing);
+    }
+  };
+  this.validate = function(surfing) {
+    if (!surfing.stack[surfing.last].operated) {
+      if (surfing.stack[surfing.last].data !== null) {
+        surfing.throw();
+      }
+    }
+  };
+};
+
+Null.prototype = operator;
+
+exports.null = new Null();
+
+var isNaN = function() {
+  this.operate = function(surfing) {
+    if (surfing.stack[surfing.last].operated) {
+      surfing.stack.pop();
+    } else {
+      surfing.stack[surfing.last].operated = true;
+      this.inDefaultOperator(surfing);
+    }
+  };
+  this.validate = function(surfing) {
+    if (!surfing.stack[surfing.last].operated) {
+      if (!(typeof(surfing.stack[surfing.last].data) == 'number' && surfing.stack[surfing.last].data != +surfing.stack[surfing.last].data)) {
+        surfing.throw();
+      }
+    }
+  };
+};
+
+isNaN.prototype = operator;
+
+exports.NaN = new isNaN();
+
 var Number = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {

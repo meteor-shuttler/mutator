@@ -88,6 +88,30 @@ describe('surfing', function() {
         assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'boolean'], schemaPath: ['boolean']}]);
       });
     });
+    describe('null', function() {
+      it('true', function() {
+        var validating = new Validating(dictionary, { null: true }, null);
+        validating.travers();
+        assert.deepEqual(validating.errors, []);
+      });
+      it('false', function() {
+        var validating = new Validating(dictionary, { null: true }, 123);
+        validating.travers();
+        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'null'], schemaPath: ['null']}]);
+      });
+    });
+    describe('nan', function() {
+      it('true', function() {
+        var validating = new Validating(dictionary, { nan: true }, NaN);
+        validating.travers();
+        assert.deepEqual(validating.errors, []);
+      });
+      it('false', function() {
+        var validating = new Validating(dictionary, { nan: true }, 123);
+        validating.travers();
+        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'nan'], schemaPath: ['nan']}]);
+      });
+    });
     describe('number', function() {
       it('true', function() {
         var validating = new Validating(dictionary, { number: true }, 123);
@@ -184,6 +208,34 @@ describe('surfing', function() {
         var validating = new Validating(dictionary, { props: { abc: { string: true } } }, { abc: 'cde' });
         validating.travers();
         assert.deepEqual(validating.errors, []);
+      });
+    });
+    describe('custom', function() {
+      it('true', function() {
+        var validating = new Validating(dictionary, { custom: function(surfing) { if (surfing.getData() != 123) surfing.throw(); } }, 123);
+        validating.travers();
+        assert.deepEqual(validating.errors, []);
+      });
+      it('false', function() {
+        var validating = new Validating(dictionary, { custom: function(surfing) { if (surfing.getData() != 123) surfing.throw(); } }, 456);
+        validating.travers();
+        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'custom'], schemaPath: ['custom']}]);
+      });
+    });
+    describe('each', function() {
+      it('true', function() {
+        var validating = new Validating(dictionary, { each: { string: true } }, { a: 'abc', b: 'bcd', c: 'cde' });
+        validating.travers();
+        assert.deepEqual(validating.errors, []);
+      });
+      it('false', function() {
+        var validating = new Validating(dictionary, { each: { number: true } }, ['abc', 'bcd', 'cde']);
+        validating.travers();
+        assert.deepEqual(validating.errors, [
+          {'error': undefined, operatorsPath: ['and', 'each', 'and', 'number'], schemaPath: ['each', 'number']},
+          {'error': undefined, operatorsPath: ['and', 'each', 'and', 'number'], schemaPath: ['each', 'number']},
+          {'error': undefined, operatorsPath: ['and', 'each', 'and', 'number'], schemaPath: ['each', 'number']}
+        ]);
       });
     });
   });

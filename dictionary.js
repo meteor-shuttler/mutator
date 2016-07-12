@@ -1,12 +1,25 @@
 module.exports = {
   and: require('./operators/and.js'),
   or: require('./operators/or.js'),
+  custom: require('./operators/custom.js'),
   props: require('./operators/props.js'),
+  each: require('./operators/each.js'),
   undefined: require('./operators/is.js').undefined,
+  Undefined: require('./operators/is.js').undefined,
   boolean: require('./operators/is.js').boolean,
+  Boolean: require('./operators/is.js').boolean,
+  null: require('./operators/is.js').null,
+  Null: require('./operators/is.js').null,
+  nan: require('./operators/is.js').NaN,
+  NaN: require('./operators/is.js').NaN,
   number: require('./operators/is.js').number,
+  Number: require('./operators/is.js').number,
   string: require('./operators/is.js').string,
+  String: require('./operators/is.js').string,
   object: require('./operators/is.js').object,
+  Object: require('./operators/is.js').object,
   array: require('./operators/is.js').array,
-  function: require('./operators/is.js').function
+  Array: require('./operators/is.js').array,
+  function: require('./operators/is.js').function,
+  Function: require('./operators/is.js').function
 };

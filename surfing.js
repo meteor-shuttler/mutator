@@ -1,4 +1,3 @@
-// Выполняет работу прохода по дереву схему.
 var Surfing = function(dictionary, schema, data, handler) {
   this.dictionary = dictionary;
   this.schema = schema;
@@ -8,12 +7,11 @@ var Surfing = function(dictionary, schema, data, handler) {
   if (!this.defaultOperator) this.defaultOperator = 'and';
   
   this.stack = [{
-    data: this.data, // Данные на этом уровне, могут не отличаться от предыдущего.
-    schema: this.schema, // Схема на этом уровне, всегда отличается от предыдущего.
+    data: this.data,
+    schema: this.schema,
     operator: this.defaultOperator
   }];
   
-  // Последний уровень стека, что бы не считать заного при обращении.
   this.last;
   
 };
@@ -23,7 +21,11 @@ Surfing.prototype.travers = function() {
     this.last = this.stack.length - 1;
     
     if (this.handler) this.handler(this);
-    this.dictionary[this.stack[this.last].operator].operate(this);
+    if (this.dictionary[this.stack[this.last].operator]) {
+      this.dictionary[this.stack[this.last].operator].operate(this);
+    } else {
+      throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
+    }
   }
 };
 
@@ -41,6 +43,10 @@ Surfing.prototype.operatorsPath = function(stackPointer) {
     if (this.stack[s].operator) path.push(this.stack[s].operator);
   }
   return path;
+};
+
+Surfing.prototype.getData = function() {
+  return this.stack[this.last].data;
 };
 
 module.exports = Surfing;

@@ -1,6 +1,5 @@
 var Surfing = require('./surfing.js');
 
-// Выполняет работу валидации при проъоде по дереву
 var Validating = function(dictionary, schema, data, handler) {
   this.dictionary = dictionary;
   this.schema = schema;
@@ -10,25 +9,19 @@ var Validating = function(dictionary, schema, data, handler) {
   if (!this.defaultOperator) this.defaultOperator = 'default';
   
   this.stack = [{
-    data: this.data, // Данные на этом уровне, могут не отличаться от предыдущего.
-    schema: this.schema, // Схема на этом уровне, всегда отличается от предыдущего.
+    data: this.data,
+    schema: this.schema,
     operator: this.defaultOperator
   }];
   
-  // Последний уровень стека.
   this.last;
   
-  // Активный уровень стека
   this.active;
   
-  // Список выбрашенных ошибок по мере прохождения.
   this.errors = [];
   
-  // Выброшенная в данный момент ошибка.
-  // Не приводит к изменению стека, но мы идём в обратном направлении по нему.
   this.throwedErrors = [];
   
-  // Обрабатываемая сейчас ошибка.
   this.throwedError;
 };
 
@@ -39,24 +32,36 @@ Validating.prototype.travers = function() {
     this.last = this.stack.length - 1;
     if (!this.throwedErrors.length) {
       this.active = this.last;
-      if (this.dictionary[this.stack[this.last].operator].validate && !this.stack[this.last].validated) {
-        this.dictionary[this.stack[this.last].operator].validate(this);
-        this.stack[this.last].validated = true;
+      
+      if (this.dictionary[this.stack[this.last].operator]) {
+        if (this.dictionary[this.stack[this.last].operator].validate && !this.stack[this.last].validated) {
+          this.dictionary[this.stack[this.last].operator].validate(this);
+          this.stack[this.last].validated = true;
+        }
+      } else {
+        throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
       }
       if (this.handler) this.handler(this);
     }
     if (!this.throwedErrors.length) {
+      if (this.dictionary[this.stack[this.last].operator]) {
         this.dictionary[this.stack[this.last].operator].operate(this);
+      } else {
+        throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
+      }
     } else {
       this.throwedError = this.throwedErrors.length - 1;
       if (this.throwedErrors[this.throwedError].index > -1) {
         this.active = this.throwedErrors[this.throwedError].index;
         
-        if (this.dictionary[this.stack[this.active].operator].catch) {
-          this.dictionary[this.stack[this.active].operator].catch(this);
+        if (this.dictionary[this.stack[this.last].operator]) {
+          if (this.dictionary[this.stack[this.active].operator].catch) {
+            this.dictionary[this.stack[this.active].operator].catch(this);
+          }
+        } else {
+          throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
         }
         
-        // Если посли ловли ошибки она еще есть движемся по стеку вверх
         if (this.throwedErrors[this.throwedError]) {
           this.throwedErrors[this.throwedError].index--;
         }

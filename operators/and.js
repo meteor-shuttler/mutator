@@ -2,21 +2,7 @@ var lodash = require('lodash');
 var Operator = require('../operator.js');
 
 var And = function() {
-  
-  // Сдвигает стек на один уровень вглубь по схеме, или обратно если кончались варианты.
-  // Добавляет ключ в путь вложенности.
   this.operate = function(surfing) {
-    
-    // Первый вызов оператора?
-      // Определить как перебирать этот тип схема для данного оператора
-      // Перезапустить
-    // Это массив?
-      // Перебирать каждый следующий элемент как имя оператора
-        // Сдвигать внутрь по этому ключу
-    // Это ключи объекта?
-      // Перебирать каждый ключ как имя оператора
-        // Сдвигать внутрь по этому ключу
-    
     if (typeof(surfing.stack[surfing.last].schema) != 'object') {
       surfing.stack.pop();
     } else {
@@ -38,9 +24,9 @@ var And = function() {
           if (typeof(surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) === 'string') {
             surfing.stack.push({
               data: surfing.stack[surfing.last].data,
-              schema: undefined,
+              schema: surfing.stack[surfing.last].schema[surfing.stack[surfing.last].key],
               operator: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key],
-              path: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]
+              path: surfing.stack[surfing.last].key
             });
           } else {
             throw new Error('unexpected');
