@@ -20,11 +20,11 @@
   },
   "main": "./main.js",
   "devDependencies": {
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0"
   },
   "scripts": {
-    "test": "mocha tests.js",
-    "chai": "^3.5.0",
+    "test": "mocha tests.js"
   },
   "dependencies": {
     "lodash": "~4.13.1"
