@@ -34,8 +34,8 @@ npm install --save surfing
 - [x] Default data (./operators/default.js)
 - [x] Operators tests (./tests.js)
 - [x] Performance tests (./tests.js)
-- [ ] Operators min/max
-- [ ] Operator regex
+- [x] Comparison operators
+- [x] Operator regex
 - [ ] API comments
 - [ ] Integrate operator "equal" to the mechanism of "defaultOperator"
 - [ ] Search in scheme by path (./finder.js)
@@ -47,6 +47,9 @@ npm install --save surfing
 
 ## Versions
 
+### 0.0.0-alpha.4
+* Comparison and regex operators
+
 ### 0.0.0-alpha.3
 * pathSchema and pathData added to stack
 * Operators: equal, set, delete, default
@@ -54,7 +57,6 @@ npm install --save surfing
 
 ### 0.0.0-alpha.2
 * Operators: null, nan, custom and each
-* Multiple names for operators
 * Remove temp comments
 
 ### 0.0.0-alpha.1
