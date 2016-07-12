@@ -10,6 +10,8 @@ var Surfing = function(dictionary, schema, data, handler) {
     data: this.data,
     schema: this.schema,
     operator: this.defaultOperator
+    // schemaPath
+    // dataPath
   }];
   
   this.last;
@@ -32,7 +34,15 @@ Surfing.prototype.travers = function() {
 Surfing.prototype.schemaPath = function(stackPointer) {
   var path = [];
   for (var s = 0; s <= stackPointer; s++) {
-    if (this.stack[s].path) path.push(this.stack[s].path);
+    if (this.stack[s].schemaPath) path.push(this.stack[s].schemaPath);
+  }
+  return path;
+};
+
+Surfing.prototype.dataPath = function(stackPointer) {
+  var path = [];
+  for (var s = 0; s <= stackPointer; s++) {
+    if (this.stack[s].dataPath) path.push(this.stack[s].dataPath);
   }
   return path;
 };

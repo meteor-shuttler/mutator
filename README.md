@@ -27,14 +27,17 @@ npm install --save surfing
 - [x] Object operator (./operators/object.js)
 - [x] Array operator (./operators/array.js)
 - [x] Function operator (./operators/function.js)
-- [ ] API comments
-- [ ] Add pathSchema and pathData to stack.
-- [ ] Equal operator (./operators/equal.js)
-- [ ] Set default data (./operators/set.js)
-- [ ] Delete data (./operators/delete.js)
-- [ ] Default data (./operators/default.js)
+- [x] Add pathSchema and pathData to stack.
+- [x] Equal operator (./operators/equal.js)
+- [x] Set data (./operators/set.js)
+- [x] Delete data (./operators/delete.js)
+- [x] Default data (./operators/default.js)
 - [x] Operators tests (./tests.js)
 - [x] Performance tests (./tests.js)
+- [ ] Operators min/max
+- [ ] Operator regex
+- [ ] API comments
+- [ ] Integrate operator "equal" to the mechanism of "defaultOperator"
 - [ ] Search in scheme by path (./finder.js)
 - [ ] Full array support for and/or operators (./operators/and.js) (./operators/or.js)
 - [ ] npm publish
@@ -44,13 +47,18 @@ npm install --save surfing
 
 ## Versions
 
+### 0.0.0-alpha.3
+* pathSchema and pathData added to stack
+* Operators: equal, set, delete, default
+* Fix many operator's bugs
+
 ### 0.0.0-alpha.2
-* Operators null, nan, custom and each
+* Operators: null, nan, custom and each
 * Multiple names for operators
 * Remove temp comments
 
 ### 0.0.0-alpha.1
-* Fix or bug
+* Fix "or" bug
 * Operators tests
 * Performance tests
 

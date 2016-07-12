@@ -222,6 +222,81 @@ describe('surfing', function() {
         assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'custom'], schemaPath: ['custom']}]);
       });
     });
+    describe('equal', function() {
+      it('true', function() {
+        var validating = new Validating(dictionary, { equal: 123 }, 123);
+        validating.travers();
+        assert.deepEqual(validating.errors, []);
+      });
+      it('false', function() {
+        var validating = new Validating(dictionary, { equal: 123 }, 456);
+        validating.travers();
+        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'equal'], schemaPath: ['equal']}]);
+      });
+    });
+    describe('set', function() {
+      it('root', function() {
+        var validating = new Validating(dictionary, { set: 456 }, 123);
+        validating.travers();
+        assert.deepEqual(validating.data, 456);
+      });
+      it('props', function() {
+        var validating = new Validating(dictionary, { props: { abc: { set: 456 } } }, { abc: 123 });
+        validating.travers();
+        assert.deepEqual(validating.data, { abc: 456 });
+      });
+      it('each', function() {
+        var validating = new Validating(dictionary, { each: { set: 456 } }, { abc: 123, bcd: 234, cde: 345 });
+        validating.travers();
+        assert.deepEqual(validating.data, { abc: 456, bcd: 456, cde: 456 });
+      });
+    });
+    describe('default', function() {
+      it('root', function() {
+        var validating = new Validating(dictionary, { default: 456 }, 123);
+        validating.travers();
+        assert.deepEqual(validating.data, 123);
+        var validating = new Validating(dictionary, { default: 456 }, undefined);
+        validating.travers();
+        assert.deepEqual(validating.data, 456);
+        var validating = new Validating(dictionary, { default: 456 }, null);
+        validating.travers();
+        assert.deepEqual(validating.data, 456);
+        var validating = new Validating(dictionary, { default: 456 }, 0);
+        validating.travers();
+        assert.deepEqual(validating.data, 456);
+        var validating = new Validating(dictionary, { default: 456 }, '');
+        validating.travers();
+        assert.deepEqual(validating.data, 456);
+      });
+      it('props', function() {
+        var validating = new Validating(dictionary, { props: { abc: { default: 456 } } }, { abc: undefined });
+        validating.travers();
+        assert.deepEqual(validating.data, { abc: 456 });
+      });
+      it('each', function() {
+        var validating = new Validating(dictionary, { each: { default: 234 } }, { abc: 123, bcd: undefined, cde: 345 });
+        validating.travers();
+        assert.deepEqual(validating.data, { abc: 123, bcd: 234, cde: 345 });
+      });
+    });
+    describe('delete', function() {
+      it('root', function() {
+        var validating = new Validating(dictionary, { delete: true }, 123);
+        validating.travers();
+        assert.deepEqual(validating.data, undefined);
+      });
+      it('props', function() {
+        var validating = new Validating(dictionary, { props: { abc: { delete: true } } }, { abc: 123, bcd: 234, cde: 345 });
+        validating.travers();
+        assert.deepEqual(validating.data, { bcd: 234, cde: 345 });
+      });
+      it('each', function() {
+        var validating = new Validating(dictionary, { each: { delete: true } }, { abc: 123, bcd: 234, cde: 345 });
+        validating.travers();
+        assert.deepEqual(validating.data, {});
+      });
+    });
     describe('each', function() {
       it('true', function() {
         var validating = new Validating(dictionary, { each: { string: true } }, { a: 'abc', b: 'bcd', c: 'cde' });

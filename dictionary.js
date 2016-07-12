@@ -4,6 +4,7 @@ module.exports = {
   custom: require('./operators/custom.js'),
   props: require('./operators/props.js'),
   each: require('./operators/each.js'),
+  equal: require('./operators/equal.js'),
   undefined: require('./operators/is.js').undefined,
   Undefined: require('./operators/is.js').undefined,
   boolean: require('./operators/is.js').boolean,
@@ -21,5 +22,8 @@ module.exports = {
   array: require('./operators/is.js').array,
   Array: require('./operators/is.js').array,
   function: require('./operators/is.js').function,
-  Function: require('./operators/is.js').function
+  Function: require('./operators/is.js').function,
+  set: require('./operators/set.js'),
+  default: require('./operators/default.js'),
+  delete: require('./operators/delete.js')
 };
