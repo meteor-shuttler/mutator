@@ -38,8 +38,22 @@ var Or = function() {
               operator: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key],
               schemaPath: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]
             });
+          } else if (typeof(surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) == 'object'){
+            surfing.stack.push({
+              data: surfing.stack[surfing.last].data,
+              schema: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key],
+              operator: surfing.defaultOperator,
+              schemaPath: surfing.defaultOperator
+            });
+          } else if (typeof(surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) == 'function'){
+            surfing.stack.push({
+              data: surfing.stack[surfing.last].data,
+              schema: surfing.stack[surfing.last].array[surfing.stack[surfing.last].key],
+              operator: 'custom',
+              schemaPath: 'custom'
+            });
           } else {
-            throw new Error('unexpected');
+            // ignore
           }
         } else {
           if (surfing.stack[surfing.last].errored) {

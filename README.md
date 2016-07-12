@@ -36,16 +36,18 @@ npm install --save surfing
 - [x] Performance tests (./tests.js)
 - [x] Comparison operators
 - [x] Operator regex
-- [ ] API comments
-- [ ] Integrate operator "equal" to the mechanism of "defaultOperator"
+- [x] Full array support for and/or operators (./operators/and.js) (./operators/or.js)
+- [ ] Lazy surfing, incomplete errors
 - [ ] Search in scheme by path (./finder.js)
-- [ ] Full array support for and/or operators (./operators/and.js) (./operators/or.js)
 - [ ] npm publish
 - [ ] API documentation
 - [ ] Examples
 - [ ] Compare the performance with SimpleSchema/node-schema-object/js-schema
 
 ## Versions
+
+### 0.0.0-alpha.5
+* Support for array and/or difinition
 
 ### 0.0.0-alpha.4
 * Comparison and regex operators

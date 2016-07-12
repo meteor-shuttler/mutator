@@ -176,31 +176,111 @@ describe('surfing', function() {
       });
     });
     describe('and', function() {
-      it('true', function() {
-        var validating = new Validating(dictionary, { and: { and: { and: { string: true } } } }, 'abc');
-        validating.travers();
-        assert.deepEqual(validating.errors, []);
+      describe('object', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { and: { and: { and: { string: true } } } }, 'abc');
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { and: { and: { and: { string: true } } } }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'and', 'and', 'string'], schemaPath: ['and', 'and', 'and', 'string']}]);
+        });
       });
-      it('false', function() {
-        var validating = new Validating(dictionary, { and: { and: { and: { string: true } } } }, 123);
-        validating.travers();
-        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'and', 'and', 'string'], schemaPath: ['and', 'and', 'and', 'string']}]);
+      describe('array', function() {
+        describe('object', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { and: [ { string: true } ] } ], 'abc');
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { and: [ { string: true } ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'and', 'and', 'string'], schemaPath: ['and', 'and', 'and', 'string']}]);
+          });
+        });
+        describe('string', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { and: [ [ 'string' ] ] } ], 'abc');
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { and: [ [ 'string' ] ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'and', 'and', 'string'], schemaPath: ['and', 'and', 'and',  'string']}]);
+          });
+        });
+        describe('function', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { and: [ [ function(surfing) { if (surfing.getData() != 123) surfing.throw(); } ] ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { and: [ [ function(surfing) { if (surfing.getData() != 123) surfing.throw(); } ] ] } ], 234);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'and', 'and', 'custom'], schemaPath: ['and', 'and', 'and',  'custom']}]);
+          });
+        });
       });
     });
     describe('or', function() {
-      it('true', function() {
-        var validating = new Validating(dictionary, { or: { or: { or: { number: true, string: true, boolean: true } } } }, 'abc');
-        validating.travers();
-        assert.deepEqual(validating.errors, []);
+      describe('object', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { or: { or: { or: { number: true, string: true, boolean: true } } } }, 'abc');
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { or: { or: { or: { number: true, string: true, boolean: true } } } }, []);
+          validating.travers();
+          assert.deepEqual(validating.errors, [
+            {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'boolean'], schemaPath: ['or', 'or', 'or', 'boolean']},
+            {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'string'], schemaPath: ['or', 'or', 'or', 'string']},
+            {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'number'], schemaPath: ['or', 'or', 'or', 'number']},
+          ]);
+        });
       });
-      it('false', function() {
-        var validating = new Validating(dictionary, { or: { or: { or: { number: true, string: true, boolean: true } } } }, []);
-        validating.travers();
-        assert.deepEqual(validating.errors, [
-          {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'boolean'], schemaPath: ['or', 'or', 'or', 'boolean']},
-          {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'string'], schemaPath: ['or', 'or', 'or', 'string']},
-          {'error': undefined, operatorsPath: ['and', 'or', 'or', 'or', 'number'], schemaPath: ['or', 'or', 'or', 'number']},
-        ]);
+      describe('array', function() {
+        describe('object', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { or: [ { string: true } ] } ], 'abc');
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { or: [ { string: true } ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'or', 'and', 'string'], schemaPath: ['and', 'or', 'and', 'string']}]);
+          });
+        });
+        describe('string', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { or: [ [ 'string' ] ] } ], 'abc');
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { or: [ [ 'string' ] ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'or', 'and', 'string'], schemaPath: ['and', 'or', 'and', 'string']}]);
+          });
+        });
+        describe('function', function() {
+          it('true', function() {
+            var validating = new Validating(dictionary, [ { or: [ [ function(surfing) { if (surfing.getData() != 123) surfing.throw(); } ] ] } ], 123);
+            validating.travers();
+            assert.deepEqual(validating.errors, []);
+          });
+          it('false', function() {
+            var validating = new Validating(dictionary, [ { or: [ [ function(surfing) { if (surfing.getData() != 123) surfing.throw(); } ] ] } ], 234);
+            validating.travers();
+            assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'or', 'and', 'custom'], schemaPath: ['and', 'or', 'and', 'custom']}]);
+          });
+        });
       });
     });
     describe('props', function() {
