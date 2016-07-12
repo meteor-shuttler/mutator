@@ -22,7 +22,11 @@ var Or = function() {
           });
         } else {
           if (surfing.stack[surfing.last].errored) {
-            surfing.throwedErrors.push.apply(surfing.throwedErrors, surfing.stack[surfing.last].errors);
+            if (surfing.options.details) {
+              surfing.throwedErrors.push.apply(surfing.throwedErrors, surfing.stack[surfing.last].errors);
+            } else {
+              surfing.throw();
+            }
           }
           surfing.stack.pop();
         }
@@ -57,7 +61,11 @@ var Or = function() {
           }
         } else {
           if (surfing.stack[surfing.last].errored) {
-            surfing.throwedErrors.push.apply(surfing.throwedErrors, surfing.stack[surfing.last].errors);
+            if (surfing.options.details) {
+              surfing.throwedErrors.push.apply(surfing.throwedErrors, surfing.stack[surfing.last].errors);
+            } else {
+              surfing.throw();
+            }
           }
           surfing.stack.pop();
         }

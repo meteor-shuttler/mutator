@@ -1,12 +1,22 @@
 var Surfing = require('./surfing.js');
 
-var Validating = function(dictionary, schema, data, handler) {
-  this.dictionary = dictionary;
+var Validating = function(schema, data, options) {
+  
+  this.options = options?options:{};
+  
+  if (!this.options.dictionary) {
+    this.options.dictionary = Surfing.dictionary;
+  }
+  if (typeof(this.options.details) !== 'boolean') {
+    this.options.details = true;
+  }
+  
+  this.dictionary = this.options.dictionary;
   this.schema = schema;
   this.data = data;
-  this.handler = handler;
+  this.handler = this.options.handler;
   
-  if (!this.defaultOperator) this.defaultOperator = 'default';
+  if (!this.defaultOperator) this.defaultOperator = 'and';
   
   this.stack = [{
     data: this.data,
@@ -77,12 +87,19 @@ Validating.prototype.travers = function() {
   }
 };
 
-Validating.prototype.throw = function(error) {
+Validating.prototype.throw = function(error, index) {
+  if (typeof(index) !== 'number') {
+    if (this.active != this.last) {
+      var index = this.active - 1;
+    } else {
+      var index = this.last - 1;
+    }
+  }
   this.throwedErrors.push({
     error: error,
-    index: this.stack.length - 2,
-    schemaPath: this.schemaPath(this.last),
-    operatorsPath: this.operatorsPath(this.last)
+    index: index,
+    schemaPath: this.schemaPath(index + 1),
+    operatorsPath: this.operatorsPath(index + 1)
   });
 };
 

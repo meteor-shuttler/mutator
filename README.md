@@ -2,6 +2,8 @@
 
 Realy simple and customizable schemas without recursion.
 
+[![Build Status](https://travis-ci.org/meteor-shuttler/surfing.svg?branch=master)](https://travis-ci.org/meteor-shuttler/surfing)
+
 ## Install
 
 ```
@@ -37,7 +39,7 @@ npm install --save surfing
 - [x] Comparison operators
 - [x] Operator regex
 - [x] Full array support for and/or operators (./operators/and.js) (./operators/or.js)
-- [ ] Lazy surfing, incomplete errors
+- [x] Lazy surfing, incomplete errors, details option
 - [ ] Search in scheme by path (./finder.js)
 - [ ] npm publish
 - [ ] API documentation
@@ -45,6 +47,12 @@ npm install --save surfing
 - [ ] Compare the performance with SimpleSchema/node-schema-object/js-schema
 
 ## Versions
+
+### 0.0.0-alpha.6
+* Options for `Surfing` and `Validating` classes
+* Move dictionary and handler to options
+* Default dictionary
+* Option `details?: boolean = true`
 
 ### 0.0.0-alpha.5
 * Support for array and/or difinition

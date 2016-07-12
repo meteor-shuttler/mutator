@@ -3,7 +3,7 @@ var Operator = require('../operator.js');
 
 var And = function() {
   this.operate = function(surfing) {
-    if (typeof(surfing.stack[surfing.last].schema) != 'object') {
+    if (typeof(surfing.stack[surfing.last].schema) != 'object' || surfing.stack[surfing.last].break) {
       surfing.stack.pop();
     } else {
       if (surfing.stack[surfing.last].keys) {
@@ -62,6 +62,11 @@ var And = function() {
       }
     }
   };
+  this.catch = function(surfing) {
+    if (!surfing.options.details) {
+      surfing.stack[surfing.active].break = true;
+    }
+  }
 };
 
 And.prototype = Operator;
