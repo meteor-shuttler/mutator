@@ -2,7 +2,7 @@ var lodash = require('lodash');
 var assert = require('chai').assert;
 var operator = require('../operator.js');
 
-var Undefined = function() {
+exports.Undefined = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -20,11 +20,11 @@ var Undefined = function() {
   };
 };
 
-Undefined.prototype = operator;
+exports.Undefined.prototype = operator;
 
-exports.undefined = new Undefined();
+exports.undefined = new exports.Undefined();
 
-var Boolean = function() {
+exports.Boolean = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -42,11 +42,11 @@ var Boolean = function() {
   };
 };
 
-Boolean.prototype = operator;
+exports.Boolean.prototype = operator;
 
-exports.boolean = new Boolean();
+exports.boolean = new exports.Boolean();
 
-var Null = function() {
+exports.Null = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -64,11 +64,11 @@ var Null = function() {
   };
 };
 
-Null.prototype = operator;
+exports.Null.prototype = operator;
 
-exports.null = new Null();
+exports.null = new exports.Null();
 
-var isNaN = function() {
+exports.nan = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -86,11 +86,11 @@ var isNaN = function() {
   };
 };
 
-isNaN.prototype = operator;
+exports.nan.prototype = operator;
 
-exports.NaN = new isNaN();
+exports.nan = new exports.nan();
 
-var Number = function() {
+exports.Number = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -108,11 +108,11 @@ var Number = function() {
   };
 };
 
-Number.prototype = operator;
+exports.Number.prototype = operator;
 
-exports.number = new Number();
+exports.number = new exports.Number();
 
-var String = function() {
+exports.String = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -130,11 +130,11 @@ var String = function() {
   };
 };
 
-String.prototype = operator;
+exports.String.prototype = operator;
 
-exports.string = new String();
+exports.string = new exports.String();
 
-var Object = function() {
+exports.Object = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -152,11 +152,11 @@ var Object = function() {
   };
 };
 
-Object.prototype = operator;
+exports.Object.prototype = operator;
 
-exports.object = new Object();
+exports.object = new exports.Object();
 
-var Array = function() {
+exports.Array = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -174,11 +174,11 @@ var Array = function() {
   };
 };
 
-Array.prototype = operator;
+exports.Array.prototype = operator;
 
-exports.array = new Array();
+exports.array = new exports.Array();
 
-var Function = function() {
+exports.Function = function() {
   this.operate = function(surfing) {
     if (surfing.stack[surfing.last].operated) {
       surfing.stack.pop();
@@ -196,6 +196,6 @@ var Function = function() {
   };
 };
 
-Function.prototype = operator;
+exports.Function.prototype = operator;
 
-exports.function = new Function();
+exports.function = new exports.Function();

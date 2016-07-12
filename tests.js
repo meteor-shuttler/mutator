@@ -222,16 +222,66 @@ describe('surfing', function() {
         assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'custom'], schemaPath: ['custom']}]);
       });
     });
-    describe('equal', function() {
-      it('true', function() {
-        var validating = new Validating(dictionary, { equal: 123 }, 123);
-        validating.travers();
-        assert.deepEqual(validating.errors, []);
+    describe('comparison', function() {
+      describe('equal', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { equal: 123 }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { equal: 123 }, 456);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'equal'], schemaPath: ['equal']}]);
+        });
       });
-      it('false', function() {
-        var validating = new Validating(dictionary, { equal: 123 }, 456);
-        validating.travers();
-        assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'equal'], schemaPath: ['equal']}]);
+      describe('greater', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { greater: 123 }, 124);
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { greater: 123 }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'greater'], schemaPath: ['greater']}]);
+        });
+      });
+      describe('less', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { less: 123 }, 122);
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { less: 123 }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'less'], schemaPath: ['less']}]);
+        });
+      });
+      describe('greaterEqual', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { greaterEqual: 123 }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { greaterEqual: 123 }, 122);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'greaterEqual'], schemaPath: ['greaterEqual']}]);
+        });
+      });
+      describe('lessEqual', function() {
+        it('true', function() {
+          var validating = new Validating(dictionary, { lessEqual: 123 }, 123);
+          validating.travers();
+          assert.deepEqual(validating.errors, []);
+        });
+        it('false', function() {
+          var validating = new Validating(dictionary, { lessEqual: 123 }, 124);
+          validating.travers();
+          assert.deepEqual(validating.errors, [{'error': undefined, operatorsPath: ['and', 'lessEqual'], schemaPath: ['lessEqual']}]);
+        });
       });
     });
     describe('set', function() {
