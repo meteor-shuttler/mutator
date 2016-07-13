@@ -1,6 +1,6 @@
 {
   "name": "surfing",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Realy simple and customizable schemas without recursion.",
   "keywords": [
     "schema",

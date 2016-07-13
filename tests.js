@@ -470,6 +470,18 @@ describe('surfing', function() {
             assert.deepEqual(surfing.errors, [{'error': undefined, operatorsPath: ['and', 'and', 'or', 'and', 'custom'], schemaPath: ['and', 'or', 'and', 'custom']}]);
           });
         });
+        describe('date', function() {
+          it('true', function() {
+            var surfing = new Surfing({ date: true }, new Date());
+            surfing.travers();
+            assert.deepEqual(surfing.errors, []);
+          });
+          it('false', function() {
+            var surfing = new Surfing({ date: true }, 'abc');
+            surfing.travers();
+            assert.deepEqual(surfing.errors, [{'error': undefined, operatorsPath: ['and', 'date'], schemaPath: ['date']}]);
+          });
+        });
       });
     });
     describe('props', function() {

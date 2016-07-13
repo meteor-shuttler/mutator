@@ -96,12 +96,12 @@ Set `finding.fail = true` if the search failed.
 Global settings for surfing instance.
 
 #### dictionary
-> Object?: Surfing.dictionary
+> Object = Surfing.dictionary
 
 In this option you can set a custom dictionary operators.
 
 #### details
-> Boolean?: true
+> Boolean = true
 
 Defines the detail of error when traversing.
 
@@ -109,9 +109,29 @@ Defines the detail of error when traversing.
 * `false`, `and` operator will stop after the first error, `or` operator throws one's own error
 
 #### execute
-> Boolean?: true
+> Boolean = true
 
 It allows you to disable validation on traversing. By default is enabled.
+
+#### beforeExecution
+> Function = function(surfing) {}
+
+Handler before execute the logic of the stack level.
+
+#### afterExecution
+> Function = function(surfing) {}
+
+Handler after execute the logic of the stack level.
+
+#### beforeOperation
+> Function = function(surfing) {}
+
+Handler before call operator of the stack level.
+
+#### afterOperation
+> Function = function(surfing) {}
+
+Handler after call operator of the stack level.
 
 ## Operators
 
@@ -223,6 +243,8 @@ All operators of typing take `and` operator as scheme.
 #### array
 
 #### function
+
+#### date
 
 ### Comparison
 
@@ -359,6 +381,9 @@ Verify with regular expression.
 ```
 
 ## Versions
+
+### 0.0.1
+* Date operator
 
 ### 0.0.0
 * Search in scheme by path

@@ -21,7 +21,12 @@ var Greater = function() {
     surfing.stack.pop();
   };
   this.execute = function(surfing) {
-    if (!(surfing.stack[surfing.last].data > surfing.stack[surfing.last].schema)) {
+    if (typeof(surfing.stack[surfing.last].data) == 'number') {
+      var object = surfing.stack[surfing.last].data;
+    } else {
+      var object = lodash.size(surfing.stack[surfing.last].data);
+    }
+    if (!(object > surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };
@@ -36,7 +41,12 @@ var Less = function() {
     surfing.stack.pop();
   };
   this.execute = function(surfing) {
-    if (!(surfing.stack[surfing.last].data < surfing.stack[surfing.last].schema)) {
+    if (typeof(surfing.stack[surfing.last].data) == 'number') {
+      var object = surfing.stack[surfing.last].data;
+    } else {
+      var object = lodash.size(surfing.stack[surfing.last].data);
+    }
+    if (!(object < surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };
@@ -51,7 +61,12 @@ var Min = function() {
     surfing.stack.pop();
   };
   this.execute = function(surfing) {
-    if (!(surfing.stack[surfing.last].data >= surfing.stack[surfing.last].schema)) {
+    if (typeof(surfing.stack[surfing.last].data) == 'number') {
+      var object = surfing.stack[surfing.last].data;
+    } else {
+      var object = lodash.size(surfing.stack[surfing.last].data);
+    }
+    if (!(object >= surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };
@@ -66,7 +81,12 @@ var Max = function() {
     surfing.stack.pop();
   };
   this.execute = function(surfing) {
-    if (!(surfing.stack[surfing.last].data <= surfing.stack[surfing.last].schema)) {
+    if (typeof(surfing.stack[surfing.last].data) == 'number') {
+      var object = surfing.stack[surfing.last].data;
+    } else {
+      var object = lodash.size(surfing.stack[surfing.last].data);
+    }
+    if (!(object <= surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };

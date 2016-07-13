@@ -199,3 +199,25 @@ exports.Function = function() {
 exports.Function.prototype = operator;
 
 exports.function = new exports.Function();
+
+exports.Date = function() {
+  this.operate = function(surfing) {
+    if (surfing.stack[surfing.last].operated) {
+      surfing.stack.pop();
+    } else {
+      surfing.stack[surfing.last].operated = true;
+      this.inDefaultOperator(surfing);
+    }
+  };
+  this.execute = function(surfing) {
+    if (!surfing.stack[surfing.last].operated) {
+      if (!lodash.isDate(surfing.stack[surfing.last].data)) {
+        surfing.throw();
+      }
+    }
+  };
+};
+
+exports.Date.prototype = operator;
+
+exports.date = new exports.Date();

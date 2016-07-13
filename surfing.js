@@ -16,7 +16,10 @@ var Surfing = function(schema, data, options) {
   this.dictionary = this.options.dictionary;
   this.schema = schema;
   this.data = data;
-  this.handler = this.options.handler;
+  this.beforeExecution = this.options.beforeExecution;
+  this.afterExecution = this.options.afterExecution;
+  this.beforeOperation = this.options.beforeOperation;
+  this.afterOperation = this.options.afterOperation;
   
   if (!this.defaultOperator) this.defaultOperator = 'and';
   
@@ -47,15 +50,16 @@ Surfing.prototype.travers = function() {
       
       if (this.options.execute) {
         if (this.dictionary[this.stack[this.last].operator]) {
+          if (this.beforeExecution) this.beforeExecution(this);
           if (this.dictionary[this.stack[this.last].operator].execute && !this.stack[this.last].validated) {
             this.dictionary[this.stack[this.last].operator].execute(this);
             this.stack[this.last].validated = true;
           }
+          if (this.afterExecution) this.afterExecution(this);
         } else {
           throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
         }
       }
-      if (this.handler) this.handler(this);
     }
     if (!this.throwedErrors.length) {
       if (this.dictionary[this.stack[this.last].operator]) {
@@ -69,9 +73,11 @@ Surfing.prototype.travers = function() {
         this.active = this.throwedErrors[this.throwedError].index;
         
         if (this.dictionary[this.stack[this.last].operator]) {
+          if (this.beforeOperation) this.beforeOperation(this);
           if (this.dictionary[this.stack[this.active].operator].catch) {
             this.dictionary[this.stack[this.active].operator].catch(this);
           }
+          if (this.afterOperation) this.afterOperation(this);
         } else {
           throw new Error('Operator "'+this.stack[this.last].operator+'" is not defined.');
         }

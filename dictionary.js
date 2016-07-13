@@ -13,6 +13,7 @@ module.exports = {
   object: require('./operators/typing.js').object,
   array: require('./operators/typing.js').array,
   function: require('./operators/typing.js').function,
+  date: require('./operators/typing.js').date,
   set: require('./operators/set.js'),
   default: require('./operators/default.js'),
   delete: require('./operators/delete.js'),
