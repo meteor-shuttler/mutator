@@ -4,49 +4,366 @@ Realy simple and customizable schemas without recursion.
 
 [![Build Status](https://travis-ci.org/meteor-shuttler/surfing.svg?branch=master)](https://travis-ci.org/meteor-shuttler/surfing)
 
+- [x] Multivariant typing
+- [x] Super fast one while implementation
+- [x] Custom operators
+
 ## Install
 
 ```
 npm install --save surfing
 ```
 
-## Tasks
+## Example
 
-- [x] Surfing by schema, data and stack in single while without recursion (./surfing.js)
-- [x] Validation on single while with error throwing support (./validating.js)
-- [x] Temp tests for surfing and validating (./tests.js)
-- [x] And operator (./operators/and.js)
-- [x] Or operator (./operators/or.js)
-- [x] Props operator (./operators/props.js)
-- [x] Each operator (./operators/each.js)
-- [x] Undefined operator (./operators/undefined.js)
-- [x] Null operator (./operators/null.js)
-- [x] NaN operator (./operators/nan.js)
-- [x] Custom operator (./operators/custom.js)
-- [x] Boolean operator (./operators/boolean.js)
-- [x] Number operator (./operators/number.js)
-- [x] String operator (./operators/string.js)
-- [x] Object operator (./operators/object.js)
-- [x] Array operator (./operators/array.js)
-- [x] Function operator (./operators/function.js)
-- [x] Add pathSchema and pathData to stack.
-- [x] Equal operator (./operators/equal.js)
-- [x] Set data (./operators/set.js)
-- [x] Delete data (./operators/delete.js)
-- [x] Default data (./operators/default.js)
-- [x] Operators tests (./tests.js)
-- [x] Performance tests (./tests.js)
-- [x] Comparison operators
-- [x] Operator regex
-- [x] Full array support for and/or operators (./operators/and.js) (./operators/or.js)
-- [x] Lazy surfing, incomplete errors, details option
-- [ ] Search in scheme by path (./finder.js)
-- [ ] npm publish
-- [ ] API documentation
-- [ ] Examples
-- [ ] Compare the performance with SimpleSchema/node-schema-object/js-schema
+```js
+// Example of custom DBRef/simple number pointer to some document
+var ref = {
+  or: {
+    object: {
+      props: {
+        id: {
+          string: true
+        },
+        collection: {
+          string: true
+        }
+      }
+    },
+    number: true
+  }
+};
+var surfing = new Surfing({
+  object: {
+    props: {
+      source: ref,
+      target: ref
+    }
+  }
+}, {
+  source: { id: '507f1f77bcf86cd799439011', collection: 'users' },
+  target: 12345
+});
+surfing.travers();
+surfing.errors.length; // 0
+```
+
+## Documentation
+
+### Surfing
+> var Surfing = require('surfing');
+> var surfing = new Surfing(schema?: Schema, data?: any, options?: Options);
+
+Constructor for a one surfing instance.
+
+#### travers
+> surfing.travers();
+
+Run travers by the scheme and data.
+
+#### errors
+> surfing.errors: [{ error?: any, schemaPath: [any], dataPath: [any], operatorsPath: [any] }]
+
+Stores error if they throwed as a result of the traversing.
+
+### Finding
+> var Finding = require('surfing/finding');
+> var finding = new Surfing(schema?: Schema, data?: any, options?: Options);
+
+Targeted traversing of the tree in search of appropriate path.
+
+#### byOperators
+> finding.byOperators(...path: [any]) => finding
+
+Find stack level by operators path.
+Set `finding.fail = true` if the search failed.
+
+#### bySchema
+> finding.bySchema(...path: [any]) => finding
+
+Find stack level by schema path.
+Set `finding.fail = true` if the search failed.
+
+#### byData
+> finding.byData(...path: [any]) => finding
+
+Find stack level by data path.
+Set `finding.fail = true` if the search failed.
+
+### Options
+> Object
+
+Global settings for surfing instance.
+
+#### dictionary
+> Object?: Surfing.dictionary
+
+In this option you can set a custom dictionary operators.
+
+#### details
+> Boolean?: true
+
+Defines the detail of error when traversing.
+
+* `true` by default, all errors will be saved, all paths will be traversed
+* `false`, `and` operator will stop after the first error, `or` operator throws one's own error
+
+#### execute
+> Boolean?: true
+
+It allows you to disable validation on traversing. By default is enabled.
+
+## Operators
+
+#### and
+
+###### Object syntax
+```js
+{
+  string: true,
+  custom: function(surfing) {/* do something */}
+}
+```
+
+###### Array syntax
+```js
+[
+  'string',
+  function(surfing) {/* do something */}
+]
+```
+
+#### or
+
+###### Object syntax
+```js
+{
+  string: true,
+  number: true
+}
+```
+
+###### Array syntax
+```js
+[
+  'string',
+  'number'
+]
+```
+
+#### props
+Allows accurately move stack to a specific key in the data
+
+```js
+var data = {
+  abc: 123
+};
+var schema = {
+  object: {
+    props: {
+      abc: {
+        number: {
+          equal: 123
+        }
+      }
+    }
+  }
+}
+```
+
+#### each
+It allows you to apply a description to all content.
+
+```js
+var data = {
+  abc: 123,
+  cde: 123
+};
+var schema = {
+  object: {
+    each: {
+      number: {
+        equal: 123
+      }
+    }
+  }
+}
+```
+
+### Typing
+
+All operators of typing take `and` operator as scheme.
+
+```js
+{
+  string: {
+    min: 10,
+    max: 30
+  },
+  number: {
+    greater: 15
+  }
+}
+```
+
+#### undefined
+
+#### boolean
+
+#### null
+
+#### nan
+
+#### number
+
+#### string
+
+#### object
+
+#### array
+
+#### function
+
+### Comparison
+
+Applicable for strings, numbers or arrays.
+
+```js
+{
+  or: {
+    string: {
+      equal: 'abc'
+    },
+    number: {
+      greater: 3,
+      less: 31
+    },
+    array: {
+      min: 3,
+      max: 30
+    }
+  }
+}
+```
+
+#### equal
+
+#### greater
+
+#### less
+
+#### min
+
+#### max
+
+### Actions
+
+#### set
+It allows to set value under certain conditions.
+
+```js
+var data = {
+  abc: 123
+};
+var schema = {
+  object: {
+    props: {
+      abc: {
+        number: {
+          set: 234
+        }
+      }
+    }
+  }
+}
+var surfing = new Surfing(schema, data);
+surfing.travers();
+surfing.data.abc; // 234
+```
+
+#### delete
+It allows to delete value under certain conditions.
+
+```js
+var data = {
+  abc: 123
+};
+var schema = {
+  object: {
+    props: {
+      abc: {
+        number: {
+          delete: true
+        }
+      }
+    }
+  }
+}
+var surfing = new Surfing(schema, data);
+surfing.travers();
+surfing.data; // {}
+```
+
+#### default
+It sets the value if it did not exist before.
+
+```js
+var data = {};
+var schema = {
+  object: {
+    props: {
+      abc: {
+        default: 123,
+        number: {
+          max: 234
+        }
+      }
+    }
+  }
+}
+var surfing = new Surfing(schema, data);
+surfing.travers();
+surfing.data; // { abc: 123 }
+```
+
+#### custom
+Performs a custom action.
+
+###### Object syntax
+```js
+{
+  custom: function(surfing) {
+    if (surfing.getData() == 123)
+      surfing.throw('My custom error');
+  }
+}
+```
+
+###### Array syntax
+```js
+[
+  function(surfing) {
+    if (surfing.getData() == 123)
+      surfing.throw('My custom error');
+  }
+]
+```
+
+#### regex
+Verify with regular expression.
+
+```js
+{
+  regex: /^\d+$/
+}
+```
 
 ## Versions
+
+### 0.0.0
+* Search in scheme by path
+* Merge Validation into Surfing class
+* Documentation
 
 ### 0.0.0-alpha.6
 * Options for `Surfing` and `Validating` classes

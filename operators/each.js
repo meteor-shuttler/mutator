@@ -6,11 +6,12 @@ var Each = function() {
     if (surfing.stack[surfing.last].keys) {
       surfing.stack[surfing.last].key++;
       if (surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]) {
-        surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key];
+        // surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key];
         surfing.stack.push({
           data: surfing.stack[surfing.last].data[surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]],
           schema: surfing.stack[surfing.last].schema,
-          operator: surfing.defaultOperator
+          operator: surfing.defaultOperator,
+          dataPath: surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]
         });
       } else {
         surfing.stack.pop();
@@ -18,11 +19,12 @@ var Each = function() {
     } else if (surfing.stack[surfing.last].array){
       surfing.stack[surfing.last].key++;
       if (surfing.stack[surfing.last].array[surfing.stack[surfing.last].key]) {
-        surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].key;
+        // surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].key;
         surfing.stack.push({
           data: surfing.stack[surfing.last].data[surfing.stack[surfing.last].key],
           schema: surfing.stack[surfing.last].schema,
-          operator: surfing.defaultOperator
+          operator: surfing.defaultOperator,
+          dataPath: surfing.stack[surfing.last].key
         });
       } else {
         surfing.stack.pop();

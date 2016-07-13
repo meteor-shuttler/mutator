@@ -5,7 +5,7 @@ var Regex = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].schema.test(surfing.stack[surfing.last].data)) {
       surfing.throw();
     }

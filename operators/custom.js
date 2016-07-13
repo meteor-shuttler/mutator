@@ -5,7 +5,7 @@ var Custom = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     surfing.stack[surfing.last].schema(surfing);
   };
 };

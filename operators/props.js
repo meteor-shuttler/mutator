@@ -6,12 +6,13 @@ var Props = function() {
     if (surfing.stack[surfing.last].keys) {
       surfing.stack[surfing.last].key++;
       if (surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]) {
-        surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key];
+        // surfing.stack[surfing.last].dataPath = surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key];
         surfing.stack.push({
           data: surfing.stack[surfing.last].data[surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]],
           schema: surfing.stack[surfing.last].schema[surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]],
           operator: surfing.defaultOperator,
-          schemaPath: surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]
+          schemaPath: surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key],
+          dataPath: surfing.stack[surfing.last].keys[surfing.stack[surfing.last].key]
         });
       } else {
         surfing.stack.pop();

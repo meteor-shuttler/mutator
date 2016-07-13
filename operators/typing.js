@@ -11,7 +11,7 @@ exports.Undefined = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'undefined') {
         surfing.throw();
@@ -33,7 +33,7 @@ exports.Boolean = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'boolean') {
         surfing.throw();
@@ -55,7 +55,7 @@ exports.Null = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (surfing.stack[surfing.last].data !== null) {
         surfing.throw();
@@ -77,7 +77,7 @@ exports.nan = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (!(typeof(surfing.stack[surfing.last].data) == 'number' && surfing.stack[surfing.last].data != +surfing.stack[surfing.last].data)) {
         surfing.throw();
@@ -99,7 +99,7 @@ exports.Number = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'number') {
         surfing.throw();
@@ -121,7 +121,7 @@ exports.String = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'string') {
         surfing.throw();
@@ -143,7 +143,7 @@ exports.Object = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'object') {
         surfing.throw();
@@ -165,7 +165,7 @@ exports.Array = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'object' || Object.prototype.toString.call(surfing.stack[surfing.last].data) !== '[object Array]') {
         surfing.throw();
@@ -187,7 +187,7 @@ exports.Function = function() {
       this.inDefaultOperator(surfing);
     }
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!surfing.stack[surfing.last].operated) {
       if (typeof(surfing.stack[surfing.last].data) !== 'function') {
         surfing.throw();

@@ -5,7 +5,7 @@ var Equal = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!lodash.isEqual(surfing.stack[surfing.last].data, surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
@@ -20,7 +20,7 @@ var Greater = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!(surfing.stack[surfing.last].data > surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
@@ -35,7 +35,7 @@ var Less = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!(surfing.stack[surfing.last].data < surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
@@ -46,32 +46,32 @@ Less.prototype = Operator;
 
 exports.less = new Less();
 
-var GreaterEqual = function() {
+var Min = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!(surfing.stack[surfing.last].data >= surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };
 };
 
-GreaterEqual.prototype = Operator;
+Min.prototype = Operator;
 
-exports.greaterEqual = new GreaterEqual();
+exports.min = new Min();
 
-var LessEqual = function() {
+var Max = function() {
   this.operate = function(surfing) {
     surfing.stack.pop();
   };
-  this.validate = function(surfing) {
+  this.execute = function(surfing) {
     if (!(surfing.stack[surfing.last].data <= surfing.stack[surfing.last].schema)) {
       surfing.throw();
     }
   };
 };
 
-LessEqual.prototype = Operator;
+Max.prototype = Operator;
 
-exports.lessEqual = new LessEqual();
+exports.max = new Max();

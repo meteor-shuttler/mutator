@@ -6,12 +6,12 @@ var Delete = function() {
     var i;
     for (i = surfing.stack.length - 2; i >= 0; i--) {
       if (surfing.stack[i].dataPath) {
-        var parent = surfing.stack[i].data;
+        var parent = surfing.stack[i-1].data;
         break;
       }
     }
     if (parent) {
-      delete surfing.stack[i].data[surfing.stack[i].dataPath];
+      delete surfing.stack[i-1].data[surfing.stack[i].dataPath];
     } else {
       surfing.data = undefined;
     }
